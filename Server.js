@@ -1,13 +1,24 @@
-const express = require('express')
-require('dotenv').config()
-const connectsdb = require('./Config/DB')
-const connectdb = require('./Config/DB')
-connectdb()
-const app = express()
-app.get('/',(request,response) => {
- response.send("Hello Level we are hear")
+const express = require('express');
+const cors = require('cors');
+require('dotenv').config();
+const connectdb = require('./Config/DB');
+const UserRouter = require('./Routers/UserRouter');
 
+connectdb();
+
+const app = express();
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Routes
+app.use('/api/auth', UserRouter);
+
+app.get('/', (request, response) => {
+  response.send("Hello Level we are here");
 });
-const port = process.env.PORT || 5000 
-app.listen(port,()=> console.log(`Server on running http://localHost:${port}`)
-)
+
+const port = process.env.PORT || 5000;
+app.listen(port, () => console.log(`Server running on http://localhost:${port}`));
