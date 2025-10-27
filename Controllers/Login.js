@@ -27,7 +27,7 @@ const Login_data = async (req, res) => {
       id: user._id,
     };
 
-    const token = jwt.sign(payload, process.env.Prab_key, {
+    const token = jwt.sign(payload, process.env.Prob_key, {
       expiresIn: "10d",
     });
 
